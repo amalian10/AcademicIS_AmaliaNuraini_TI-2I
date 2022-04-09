@@ -21,5 +21,7 @@ class Student extends Model // Model definition
  'Name',
  'Class',
  'Major',
+ 'Address',
+ 'Date_of_Birth',
  ];
 };

@@ -33,6 +33,8 @@ public function store(Request $request)
      'Name' => 'required',
      'Class' => 'required',
      'Major' => 'required',
+     'Address' => 'required',
+     'Date_of_Birth' => 'required',
  ]);
 
  // eloquent function to add data
@@ -64,6 +66,8 @@ $request->validate([
     'Name' => 'required',
     'Class' => 'required',
     'Major' => 'required', 
+    'Address' => 'required',
+    'Date_of_Birth' => 'required',
 ]);
 //Eloquent function to update the data 
 Student::where('nim', $nim)
@@ -72,6 +76,8 @@ Student::where('nim', $nim)
     'name'=>$request->Name,
     'class'=>$request->Class,
     'major'=>$request->Major,
+    'address'=>$request->Address,
+    'date_of_birth'=>$request->Date_of_Birth,
 ]);
 //if the data successfully updated, will return to main page 
 return redirect()->route('student.index')
