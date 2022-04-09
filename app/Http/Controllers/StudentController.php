@@ -19,7 +19,7 @@ public function index(Request $request)
 //  $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
 //  return view('student.index', ['student' => $student,'paginate'=>$paginate]);
 
-$student = DB::table('student')->simplePaginate(3);
+// $student = DB::table('student')->simplePaginate(3);
 $student = Student::where([
     ['Name','!=',Null],
             [function($query)use($request){
@@ -29,7 +29,8 @@ $student = Student::where([
             }]
         ])
         ->orderBy('Nim','desc')
-        ->paginate(3);
+        // ->paginate(3);
+        ->simplePaginate(3);
 
         return view('student.index' , compact('student'))
         ->with('i',(request()->input('page',1)-1)*3);

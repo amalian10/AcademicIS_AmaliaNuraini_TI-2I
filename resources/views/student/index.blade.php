@@ -8,6 +8,28 @@
    <div class="float-right my-2">
     <a class="btn btn-success" href="{{ route('student.create') }}"> Input Student Data</a>
    </div>
+   <div>
+    <div class="mx-auto pull-right">
+        <div class="float-left">
+            <form action="{{ route('student.index') }}" method="GET" role="search">
+                <div class="input-group">
+                    <span class="input-group-btn mr-5 mt-1">
+                        <button class="btn btn-info" type="submit" title="Search Student">
+                            <span class="fas fa-search">Search</span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control mr-2" name="term" placeholder="Search Student Name" id="term">
+                    <a href="{{ route('student.index') }}" class=" mt-1">
+                        <span class="input-group-btn">
+                            <button class="btn btn-danger" type="button" title="Refresh page">
+                                <span class="fas fa-sync-alt">Refresh</span>
+                            </button>
+                        </span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
   </div>
  </div>
  
