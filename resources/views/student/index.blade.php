@@ -52,4 +52,5 @@
     </tr>
     @endforeach
   </table>
+  {{$student->links()}}
 @endsection

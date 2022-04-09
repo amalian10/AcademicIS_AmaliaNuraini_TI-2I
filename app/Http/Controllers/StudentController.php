@@ -12,12 +12,27 @@ class StudentController extends Controller
  *
  * @return \Illuminate\Http\Response
  */
-public function index()
+public function index(Request $request)
 {
  // the eloquent function to displays data
- $student = Student::all(); // Mengambil semua isi tabel
- $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
- return view('student.index', ['student' => $student,'paginate'=>$paginate]);
+//  $student = Student::all(); // Mengambil semua isi tabel
+//  $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
+//  return view('student.index', ['student' => $student,'paginate'=>$paginate]);
+
+$student = DB::table('student')->simplePaginate(3);
+$student = Student::where([
+    ['Name','!=',Null],
+            [function($query)use($request){
+                if (($term = $request->term)) {
+                    $query->orWhere('Name','LIKE','%'.$term.'%')->get();
+                }
+            }]
+        ])
+        ->orderBy('Nim','desc')
+        ->paginate(3);
+
+        return view('student.index' , compact('student'))
+        ->with('i',(request()->input('page',1)-1)*3);
 }
 
 public function create()
