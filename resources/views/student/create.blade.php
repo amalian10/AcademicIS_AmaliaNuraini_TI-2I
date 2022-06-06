@@ -32,20 +32,24 @@
     </div>
     <div class="form-group">
      <label for="Class">Class</label> 
-     <input type="Class" name="Class" class="form-control" id="Class" aria-describedby="Class" > 
+     <select name="Class" class="form-control" >
+        @foreach($class as $kls)
+          <option value="{{$kls->id}}">{{$kls->class_name}}</option> 
+        @endforeach
+        </select>
     </div>
     <div class="form-group">
      <label for="Major">Major</label> 
      <input type="Major" name="Major" class="form-control" id="Major" aria-describedby="Major" > 
     </div>
-    <div class="form-group">
+    <!-- <div class="form-group">
      <label for="Address">Address</label> 
      <input type="Address" name="Address" class="form-control" id="Address" aria-describedby="Address" > 
     </div>
     <div class="form-group">
      <label for="Date_of_Birth">Date of Birth</label> 
      <input type="Date_of_Birth" name="Date_of_Birth" class="form-control" id="Date_of_Birthr" aria-describedby="Date_of_Birth" > 
-    </div>
+    </div> -->
    <button type="submit" class="btn btn-primary">Submit</button>
    </form>
    </div>

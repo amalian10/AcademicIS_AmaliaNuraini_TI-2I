@@ -45,8 +45,8 @@
    <th>Name</th>
    <th>Class</th>
    <th>Major</th>
-   <th>Address</th>
-   <th>Date_of_Birth</th>
+   <!-- <th>Address</th>
+   <th>Date_of_Birth</th> -->
    <th width="280px">Action</th>
   </tr>
   @foreach ($student as $mhs)
@@ -54,10 +54,10 @@
  
    <td>{{ $mhs ->nim }}</td>
    <td>{{ $mhs ->name }}</td>
-   <td>{{ $mhs ->class }}</td>
+   <td>{{ $mhs ->class -> class_name}}</td>
    <td>{{ $mhs ->major }}</td>
-   <td>{{ $mhs ->Address }}</td>
-   <td>{{ $mhs ->Date_of_Birth }}</td>
+   <!-- <td>{{ $mhs ->Address }}</td>
+   <td>{{ $mhs ->Date_of_Birth }}</td> -->
    <td>
    <form action="{{ route('student.destroy',['student'=>$mhs->nim]) }}" method="POST">
  
@@ -74,5 +74,5 @@
     </tr>
     @endforeach
   </table>
-  {{$student->links()}}
+
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use DB;
+use App\Models\ClassModel;
 
 class StudentController extends Controller
 {
@@ -12,9 +13,12 @@ class StudentController extends Controller
  *
  * @return \Illuminate\Http\Response
  */
-public function index(Request $request)
-{
- // the eloquent function to displays data
+public function index(Request $request){
+    $student = Student::with('class')->get();
+    // $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
+    // return view('student.index', ['student' => $student, 'paginate'=>$paginate]);
+
+// the eloquent function to displays data
 //  $student = Student::all(); // Mengambil semua isi tabel
 //  $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
 //  return view('student.index', ['student' => $student,'paginate'=>$paginate]);
@@ -31,6 +35,7 @@ $student = Student::where([
         ->orderBy('Nim','desc')
         // ->paginate(3);
         ->simplePaginate(3);
+        
 
         return view('student.index' , compact('student'))
         ->with('i',(request()->input('page',1)-1)*3);
@@ -38,7 +43,9 @@ $student = Student::where([
 
 public function create()
 {
-    return view('student.create');
+    // return view('student.create');
+    $class = ClassModel::all();
+    return view('student.create', ['class' => $class]);
 }
 
 public function store(Request $request)
@@ -49,13 +56,26 @@ public function store(Request $request)
      'Name' => 'required',
      'Class' => 'required',
      'Major' => 'required',
-     'Address' => 'required',
-     'Date_of_Birth' => 'required',
+    //  'Address' => 'required',
+    //  'Date_of_Birth' => 'required',
  ]);
 
  // eloquent function to add data
- Student::create($request->all());
+//  Student::create($request->all());
  // if the data is added successfully, will return to the main page
+ 
+ $student = new Student;
+ $student->nim = $request->get('Nim');
+ $student->name = $request->get('Name');
+ $student->major = $request->get('Major');
+ $student->save();
+
+ $class = new ClassModel;
+ $class->id = $request->get('Class');
+
+ $student->class()->associate($class);
+ $student->save();
+
  return redirect()->route('student.index')
  ->with('success', 'Student Successfully Added');
 }
@@ -82,8 +102,8 @@ $request->validate([
     'Name' => 'required',
     'Class' => 'required',
     'Major' => 'required', 
-    'Address' => 'required',
-    'Date_of_Birth' => 'required',
+    // 'Address' => 'required',
+    // 'Date_of_Birth' => 'required',
 ]);
 //Eloquent function to update the data 
 Student::where('nim', $nim)
@@ -92,8 +112,8 @@ Student::where('nim', $nim)
     'name'=>$request->Name,
     'class'=>$request->Class,
     'major'=>$request->Major,
-    'address'=>$request->Address,
-    'date_of_birth'=>$request->Date_of_Birth,
+    // 'address'=>$request->Address,
+    // 'date_of_birth'=>$request->Date_of_Birth,
 ]);
 //if the data successfully updated, will return to main page 
 return redirect()->route('student.index')
