@@ -1,24 +1,21 @@
 @extends('student.layout')
- 
 @section('content')
 <div class="container mt-5">
-  <div class="row justify-content-center align-items-center">
-   <div class="card" style="width: 24rem;">
-    <div class="card-header">
-    Student Detail
+    <div class="row justify-content-center align-items-center">
+        <div class="card" style="width: 24rem;">
+            <div class="card-header">
+                Student Detail Data
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><b>Nim : </b>{{ $student->nim }}</li>
+                    <li class="list-group-item"><b>Name : </b>{{ $student->name }}</li>
+                    <li class="list-group-item"><b>Class : </b>{{ $student->class->class_name }}</li>
+                    <li class="list-group-item"><b>Major : </b>{{ $student->major }}</li>
+                </ul>
+            </div>
+            <a href="{{ route('student.index') }}" class="btn btn-success">Back</a>
+        </div>
     </div>
-    <div class="card-body">
-     <ul class="list-group list-group-flush">
-      <li class="list-group-item"><b>Nim: </b>{{$Student->nim}}</li>
-      <li class="list-group-item"><b>Name: </b>{{$Student->name}}</li>
-      <li class="list-group-item"><b>Class: </b>{{$Student->class}}</li>
-      <li class="list-group-item"><b>Major: </b>{{$Student->major}}</li>
-      <!-- <li class="list-group-item"><b>Address: </b>{{$Student->Address}}</li>
-      <li class="list-group-item"><b>Date_of_Birth: </b>{{$Student->Date_of_Birth}}</li> -->
-     </ul>
-    </div>
-    <a class="btn btn-success mt-3" href="{{ route('student.index') }}">Back</a>
-   </div>
- </div>
 </div>
-@endsection 
+@endsection

@@ -1,10 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
-Route::resource('student', StudentController::class);
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,4 +17,7 @@ Route::resource('student', StudentController::class);
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('student', StudentController::class);
+
+Route::resource('student',StudentController::class);
+Route::get('/student/{student}/nilai', [StudentController::class, 'nilai'])->name('student.nilai');
+Route::get('/student/{student}/nilai/pdf', [StudentController::class, 'print'])->name('student.print');

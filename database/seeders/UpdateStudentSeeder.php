@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 class UpdateStudentSeeder extends Seeder
 {
     /**
@@ -13,6 +15,6 @@ class UpdateStudentSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('student')->update(['class_id' => 8]);
+        DB::table('student')->update(['class_id' => '9']);
     }
 }
