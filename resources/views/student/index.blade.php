@@ -5,7 +5,6 @@
         <div class="pull-left mt-2">
             <h2>INFORMATION TECHNOLOGY-STATE POLYTECHNIC OF MALANG</h2>
         </div>
-
         <div class="row justify-content-center mb-3 mt-3">
             <div class="col-md-6">
                 <form action="">
@@ -25,20 +24,20 @@
         </div>
     </div>
 </div>
-
 @if($message = Session::get('success'))
 <div class="alert alert-success">
     <p>{{ $message }}</p>
 </div>
 @endif
-
 <table class="table table-bordered">
     <tr>
         <th>Nim</th>
         <th>Name</th>
         <th>Class</th>
         <th>Major</th>
-        
+        <th>Address</th>
+        <th>Date of Birth</th>
+        <th width="280px">Action</th>
         <th width="300px">Action</th>
     </tr>
     @foreach($student as $mhs)
@@ -47,8 +46,8 @@
         <td>{{ $mhs->name }}</td>
         <td>{{ $mhs->class->class_name }}</td>
         <td>{{ $mhs->major }}</td>
-        
-        <td><img width="50px" src="{{ asset('storage/'.$mhs->photo )}}" alt=""></td>
+        <td>{{ $mhs->address }}</td>
+        <td>{{ $mhs->dateofbirth }}</td>
         <td>
             <form action="{{ route('student.destroy',['student' =>$mhs->nim]) }}" method="POST">
                 <a href="{{ route('student.show',$mhs->nim) }}" class="btn btn-info">Show</a>

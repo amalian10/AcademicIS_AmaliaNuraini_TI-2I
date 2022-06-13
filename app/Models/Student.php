@@ -1,32 +1,26 @@
 <?php
-
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class Student extends Model
 {
     protected $table = 'student';
-    protected $primaryKey = 'nim';
+    protected $primaryKey = 'id_student';
     use HasFactory;
     protected $fillable = [
         'Nim',
         'Name',
-        'class_id', // using Class it also work
+        'Class',
         'Major',
         'Address',
-        'DateOfBirth',
-        'Photo'
+        'DateOfBirth'
     ];
-
     public function scopeSearch($query, array $searching)
     {
         $query->when($searching['search'] ?? false, function($query, $search){
             return $query->where('name', 'like', '%'.$search.'%');
         });
     }
-
     public function class(){
         return $this->belongsTo(ClassModel::class);
     }

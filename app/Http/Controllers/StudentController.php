@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\ClassModel;
@@ -7,8 +6,6 @@ use App\Models\Course;
 use App\Models\Course_Student;
 use App\Models\Student;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class StudentController extends Controller
 {
@@ -19,12 +16,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        // $student = Student::with('class')->get(); //take all data from table
-        // $paginate = Student::orderBy('id_student', 'asc')->paginate(3)->search(request(['search']));
         return view('student.index', [
             'student' => Student::orderBy('id_student', 'asc')->search(request(['search']))->paginate(3)
-            // 'student' => $student,
-            // 'student' => $paginate
         ]);
     }
 
@@ -40,7 +33,6 @@ class StudentController extends Controller
             'class' => $class
         ]);
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -54,28 +46,22 @@ class StudentController extends Controller
             'Name' => 'required',
             'Class' => 'required',
             'Major' => 'required',
+            'Address' => 'required',
+            'DateOfBirth' => 'required'
         ]);
-
-        if ($request->file('Photo')) {
-            $photo_name = $request->file('Photo')->store('image', 'public');
-        }
-
         $student = new Student;
         $student->nim = $request->get('Nim');
         $student->name = $request->get('Name');
         $student->major = $request->get('Major');
-        
-
+        $student->address = $request->get('Address');
+        $student->dateofbirth = $request->get('DateOfBirth');
         $class = new ClassModel;
         $class->id = $request->get('Class');
-
         $student->class()->associate($class);
         $student->save();
-
         return redirect()->route('student.index')
             ->with('success', 'Student Sucessfully Added');
     }
-
     /**
      * Display the specified resource.
      *
@@ -87,7 +73,6 @@ class StudentController extends Controller
         $student = Student::with('class')->where('nim', $nim)->first();
         return view('student.detail', compact('student'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -100,7 +85,6 @@ class StudentController extends Controller
         $class = ClassModel::all();
         return view('student.edit', compact('student','class'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -115,25 +99,23 @@ class StudentController extends Controller
             'Name' => 'required',
             'Class' => 'required',
             'Major' => 'required',
-        ]);        
-
+            'Address' => 'required',
+            'DateOfBirth' => 'required'
+        ]);
         $student = Student::with('class')->where('nim', $nim)->first();
         $student->nim = $request->get('Nim');
         $student->name = $request->get('Name');
-        $student->major = $request->get('Major');       
-
+        $student->major = $request->get('Major');
+        $student->address = $request->get('Address');
+        $student->dateofbirth = $request->get('DateOfBirth');
         $student->save();
-
         $class = new ClassModel;
         $class->id = $request->get('Class');
-
         $student->class()->associate($class);
         $student->save();
-
         return redirect()->route('student.index')
             ->with('success', 'Student Succesfully Updated');
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -147,10 +129,9 @@ class StudentController extends Controller
             ->with('success', 'Student Successfully Deleted');
     }
 
-
-    public function print($nim){
-        // $student = Student::with('course')->where('nim', $nim)->first();
-        // $pdf = PDF::loadview('student.nilai_pdf', compact('student'));
-        // return $pdf->stream();
+    public function nilai($nim){
+        $student = Student::with('course')->where('nim', $nim)->first();
+        $course_student = Course_Student::all();
+        return view('student.nilai', compact('student','course_student'));
     }
 }
